@@ -1,7 +1,7 @@
 ## Loading gel
 
 ## retrieving first level of gel image matrix
-.gel_to_mat <- function(gel_img){
+gel_to_mat <- function(gel_img){
     #check values for each pixel - all the same
     if(sum(gel_img[,, 1] != gel_img[,, 2]) ||
            sum(gel_img[,, 2] != gel_img[,, 3])){
@@ -22,7 +22,7 @@
 readGel <- function(path){
     if(tools::file_ext(path) %in% c("jpeg","jpg")){
         jpeg::readJPEG(path) %>%
-            .gel_to_mat() %>%
+            gel_to_mat() %>%
             return()
     }else{
         stop("jpeg input file required, with extension 'jpeg' or 'jpg'")
