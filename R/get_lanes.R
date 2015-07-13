@@ -1,8 +1,8 @@
 # ## functions for finding lane edges from gel matrix
 # update to take uncroped image as input
-lane_edges <- function(gel_mat){
+lane_edges <- function(gel_mat, lanes){
     gel_cols <- gel_mat  %>% .get_gel_cols()
-    lane_edges_df <- .find_lane_edges(gel_cols, return_df = TRUE)
+    lane_edges_df <- .find_lane_edges(gel_cols, lanes, return_df = TRUE)
     list(col_intensity = gel_cols,
          lane_edges_df = lane_edges_df)
 }
@@ -13,7 +13,7 @@ lane_edges <- function(gel_mat){
 
 ## splits gel into number of equal size regions and returns minimum of each
 ## region as a vector
-.find_lane_edges <- function(gel_cols, lanes = 12, return_df = FALSE){
+.find_lane_edges <- function(gel_cols, lanes, return_df = FALSE){
     # finding lane edges
     nedges <- lanes + 1
     bins <- cut(1:length(gel_cols),c(0:nedges * length(gel_cols)/nedges))
@@ -34,12 +34,12 @@ lane_edges <- function(gel_mat){
 }
 
 ## generate data frame with lane profile intensities
-lane_intensities <- function(lane_edge_df, gel_mat){
+lane_intensities <- function(lane_edge_df, gel_mat, lanes){
     gel_df <- t(gel_mat) %>% as.data.frame() %>%
                 dplyr::tbl_df() %>%
                 dplyr::mutate(x = 1:n(),
                        lanes = cut(x, breaks = lane_edge_df$x,
-                                   labels = paste0("L",1:12))) %>%
+                                   labels = paste0("L",1:lanes))) %>%
                 dplyr::filter(!is.na(lanes)) %>%
                 dplyr::group_by(lanes) %>%
                 dplyr::summarise_each(dplyr::funs(sum))

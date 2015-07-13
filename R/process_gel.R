@@ -11,10 +11,10 @@ process_gel <- function(gel_dat){
     load(gel_dat)
     image_file <- paste0(dirname(gel_dat),"/", filename)
     gel_mat <- readGel(image_file)
-    lane_edge_list <- lane_edges(gel_mat)
-    intensity_df <- lane_intensities(lane_edge_list[['lane_edges_df']], gel_mat)
+    lane_edge_list <- lane_edges(gel_mat, lanes)
+    intensity_df <- lane_intensities(lane_edge_list[['lane_edges_df']], gel_mat, lanes)
     norm_df <- norm_intensity(intensity_df)
-    peak_df <- calc_ladder_markers(norm_df, r1_list, r2_list, r3_list) %>%
+    peak_df <- calc_ladder_markers(norm_df, ladder_lanes, r1_list, r2_list, r3_list) %>%
         add_marker(marker_labels)
     bin_df <- add_marker_bins(norm_df, peak_df, marker_labels) %>%
         calc_bin_props()

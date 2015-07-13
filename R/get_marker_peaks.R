@@ -4,7 +4,7 @@
 
 # normalize intensity values by total area under the curve for each sample
 norm_intensity <- function(intensity_df){
-    long_df <- intensity_df %>% tidyr::gather("lane","intensity", 2:13) %>%
+    long_df <- intensity_df %>% tidyr::gather("lane","intensity", 2:ncol(intensity_df)) %>%
         dplyr::group_by(lane) %>%
         dplyr::mutate(norm_intensity = intensity/sum(intensity))
 }
@@ -40,7 +40,7 @@ findpeaks <- function(vec,bw=1,x.coo=c(1:length(vec))){
 }
 
 # get marker positions
-calc_ladder_markers <- function(norm_df, r1_list, r2_list, r3_list){
+calc_ladder_markers <- function(norm_df, ladder_lanes, r1_list, r2_list, r3_list){
     # filtering by even positions to prevent multiple peaks for the same marker
     peak_df <- dplyr::data_frame()
     for(j in list(r1_list, r2_list, r3_list)){
@@ -49,7 +49,8 @@ calc_ladder_markers <- function(norm_df, r1_list, r2_list, r3_list){
         bw <- as.numeric(j['bw'])
         n_peaks <- as.numeric(j['npeaks'])
         x <- c(); y <- c(); lane <- c()
-        for(i in c("L2", "L11")){
+        ladder_lane_labels <- paste0("L", ladder_lanes)
+        for(i in ladder_lane_labels){
             df_x <- unique(norm_df$x)[c(leftset:rightset)]
             even_x <- df_x[which(df_x %% 2 == 0)]
             marker_df <- norm_df  %>%
@@ -69,8 +70,10 @@ calc_ladder_markers <- function(norm_df, r1_list, r2_list, r3_list){
 }
 
 # check marker placement
-check_marker_plot <- function(norm_df, peak_df){
-    marker_lanes <- norm_df %>% dplyr::filter(lane %in% c("L2", "L11"))
+check_marker_plot <- function(norm_df, peak_df, ladder_lanes){
+    print(norm_df)
+    marker_lanes <- norm_df %>% dplyr::filter(lane %in% paste0("L", ladder_lanes))
+    print(marker_lanes)
     ggplot2::ggplot() +
         ggplot2::geom_line( data = marker_lanes,
                             ggplot2::aes(x = x, y = norm_intensity),
