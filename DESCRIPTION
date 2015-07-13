@@ -11,5 +11,7 @@ Imports: jpeg,
     tidyr,
     dplyr,
     ggplot2,
-    stringr
+    stringr,
+    grid,
+    shiny
 Suggests: testthat
