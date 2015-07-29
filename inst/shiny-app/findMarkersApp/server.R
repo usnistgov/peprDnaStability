@@ -1,20 +1,7 @@
-
 # This is the server logic for a Shiny web application.
 # You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
 
-# library(shiny)
-# library(jpeg)
-# library(png)
-# library(grid)
-#if peprDnaStability needs to be reloaded
-#library(devtools)
-# install_local(path="~/Desktop/micro_rm/peprrDnaStability)
-library(peprrDnaStability)
-# source("image_processing.R")
-# source("image_analysis.R")
+library(peprDnaStability)
 
 shinyServer(function(input, output) {
     gel_image <- NULL; gel_cols <- NULL; lane_edge_df <- NULL
