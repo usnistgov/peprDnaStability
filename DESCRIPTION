@@ -1,8 +1,15 @@
-Package: peprrDnaStability
-Title: What the Package Does (one line, title case)
+Package: peprDnaStability
+Title: For Analysis of NIST Genomic DNA PFGE Gels Images
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph)
+Authors@R: person("Nathan", "Olson", , "nolson@nist.gov", role = c("aut", "cre"))
+Description: The peprDnaStability package was developed to facilitate analysis
+             of pulse field gel electrophoresis results of the NIST genomic
+             DNA reference material.  The package includes a shiny app (FindMarkers)
+             that is used to identify the positions and size of the gel ladder
+             bands.  The parameters for identifying the marker position are
+             exported from the app and used as input for batch image processing
+             and statistical analysis.
+
 Depends: R (>= 3.1.2)
 License: What license is it under?
 LazyData: true
