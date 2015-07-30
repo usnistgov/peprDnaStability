@@ -35,11 +35,12 @@ lane_edges <- function(gel_mat, lanes){
 
 ## generate data frame with lane profile intensities
 lane_intensities <- function(lane_edge_df, gel_mat, lanes){
+    # lane_labels <- paste0("L",c(paste0("0",1:9),1:12))[1:length(lanes)]
     gel_df <- t(gel_mat) %>% as.data.frame() %>%
                 dplyr::tbl_df() %>%
                 dplyr::mutate(x = 1:n(),
                        lanes = cut(x, breaks = lane_edge_df$x,
-                                   labels = paste0("L",1:lanes))) %>%
+                                   labels = 1:lanes)) %>%
                 dplyr::filter(!is.na(lanes)) %>%
                 dplyr::group_by(lanes) %>%
                 dplyr::summarise_each(dplyr::funs(sum))

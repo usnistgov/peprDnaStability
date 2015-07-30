@@ -49,7 +49,12 @@ calc_ladder_markers <- function(norm_df, ladder_lanes, r1_list, r2_list, r3_list
         bw <- as.numeric(j['bw'])
         n_peaks <- as.numeric(j['npeaks'])
         x <- c(); y <- c(); lane <- c()
-        ladder_lane_labels <- paste0("L", ladder_lanes)
+        if(!ladder_lanes[1] %in% norm_df$lane){
+            ladder_lane_labels <- paste0("L", ladder_lanes)
+        }else{
+            ladder_lane_labels <- ladder_lanes
+        }
+
         for(i in ladder_lane_labels){
             df_x <- unique(norm_df$x)[c(leftset:rightset)]
             even_x <- df_x[which(df_x %% 2 == 0)]
