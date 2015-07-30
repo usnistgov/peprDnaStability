@@ -84,7 +84,7 @@ for(x in batch_data){
 
 ## adding metadata
 meta <- read.csv(gel_metadata,stringsAsFactors = F) %>% filter(condition != "Blank") %>% 
-            mutate(lane_labels = lane, lane = gsub("L0","L",lane))
+            mutate(lane_labels = lane, lane = gsub("L0","",lane), lane = gsub("L","",lane))
 intensity_df$lane <- as.character(intensity_df$lane)
 intensity <- left_join(intensity_df, meta) %>% filter(condition != "Blank")
 markers <- left_join(markers_df, meta) %>% filter(condition != "Blank")
