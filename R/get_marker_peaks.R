@@ -77,7 +77,7 @@ calc_ladder_markers <- function(norm_df, ladder_lanes, r1_list, r2_list, r3_list
 # check marker placement
 check_marker_plot <- function(norm_df, peak_df, ladder_lanes){
     print(norm_df)
-    marker_lanes <- norm_df %>% dplyr::filter(lane %in% paste0("L", ladder_lanes))
+    marker_lanes <- norm_df %>% dplyr::filter(lane %in% ladder_lanes)#paste0("L", ladder_lanes))
     print(marker_lanes)
     ggplot2::ggplot() +
         ggplot2::geom_line( data = marker_lanes,
