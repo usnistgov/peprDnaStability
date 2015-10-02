@@ -3,6 +3,9 @@
 ## retrieving first level of gel image matrix
 gel_to_mat <- function(gel_img){
     #check values for each pixel - all the same
+    if(length(dim(gel_img)) == 2){
+        return(gel_img)
+    }
     if(sum(gel_img[,, 1] != gel_img[,, 2]) ||
            sum(gel_img[,, 2] != gel_img[,, 3])){
         warning("Matrix levels are not equal, convert image to grey scale")
